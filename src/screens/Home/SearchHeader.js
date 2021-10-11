@@ -1,8 +1,9 @@
 import React from "react";
 import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import { COLORS, FONTS, icons, SIZES } from "../../../constants";
+import { useModals } from "../../hooks/useModal";
 
-const SearchHeader = () => {
+const SearchHeader = ({ toggleFilterModal }) => {
   return (
     <View
       style={{
@@ -25,7 +26,7 @@ const SearchHeader = () => {
         placeholder="Search for a bite...."
         style={{ flex: 1, marginLeft: SIZES.radius, ...FONTS.body3 }}
       />
-      <TouchableOpacity>
+      <TouchableOpacity onPress={toggleFilterModal}>
         <Image
           source={icons.filter}
           style={{ height: 20, width: 20, tintColor: COLORS.black }}
