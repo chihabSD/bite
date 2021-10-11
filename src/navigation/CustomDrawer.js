@@ -70,10 +70,25 @@ const CustomDrawerContnet = ({ navigation }) => {
             }}
             onPress={() => console.warn("profile")}
           >
-            <Image
-              source={dummyData.myProfile?.profile_image}
-              style={{ height: 50, width: 50, borderRadius: SIZES.radius }}
-            />
+            <View
+              style={{
+                backgroundColor: "black",
+                height: 60,
+                width: 60,
+                borderRadius: 60 / 2,
+              }}
+            >
+              <Image
+                // source={dummyData.myProfile?.profile_image}
+                source={icons.userProfile}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  tintColor: "grey",
+                  borderRadius: SIZES.radius,
+                }}
+              />
+            </View>
             <View style={{ marginLeft: SIZES.radius }}>
               <Text style={{ color: COLORS.white, ...FONTS.h3 }}>
                 {/* {dummyData.myProfile?.name} */}
