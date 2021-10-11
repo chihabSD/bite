@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -19,27 +19,43 @@ import { useRedux } from "../hooks/useRedux";
 import { setSelectedTab } from "../redux/reducers/tab";
 import LG from "react-native-linear-gradient";
 import BottomTab from "../components/BottomTab";
+import { CartTab, Favourite, Home, Search, Notification } from ".";
 const MainLayout = ({ drawerAnimatedStyle, navigation }) => {
-  const homeTabFlex = useSharedValue(1);
-  const homeTabColor = useSharedValue("white");
-
-  const searchTabFlex = useSharedValue(1);
-  const searchTabColor = useSharedValue("white");
-
-  const cartTabFlex = useSharedValue(1);
-  const cartTabColor = useSharedValue("white");
-
-  const favouriteTabFlex = useSharedValue(1);
-  const favouriteTabColor = useSharedValue("white");
-
-  const notificationTabFlex = useSharedValue(1);
-  const notificationTabColor = useSharedValue("white");
-
   const { dispatch, selectedTab } = useRedux();
 
+  const flatListRef = useRef();
   useEffect(() => {
     setSelectedTab(constants.screens.home);
   }, []);
+
+  //   useEffect(() => {
+  //     if (selectedTab == constants.screens.search) {
+  //       flatListRef?.current?.scrollToIndex({
+  //         index: 1,
+  //         animated: false,
+  //       });
+  //     }
+  //     if (selectedTab == constants.screens.cart) {
+  //       flatListRef?.current?.scrollToIndex({
+  //         index: 2,
+  //         animated: false,
+  //       });
+  //     }
+  //     if (selectedTab == constants.screens.favourite) {
+  //       flatListRef?.current?.scrollToIndex({
+  //         index: 3,
+  //         animated: false,
+  //       });
+  //     }
+  //     if (selectedTab == constants.screens.notification) {
+  //       flatListRef?.current?.scrollToIndex({
+  //         index: 4,
+  //         animated: false,
+  //       });
+  //     }
+
+  //     setSelectedTab(constants.screens.home);
+  //   }, [selectedTab]);
 
   return (
     <Animated.View
@@ -94,9 +110,35 @@ const MainLayout = ({ drawerAnimatedStyle, navigation }) => {
           </TouchableOpacity>
         }
       />
+
+      {/* {selectedTab == constants.screens.home ? <Home /> : null} */}
       <View style={{ flex: 1 }}>
-        <Text>MainLayout</Text>
+        <FlatList
+          //   ref={flatListRef}
+          horizontal
+          scrollEnabled={false}
+          pagingEnabled
+          snapToAlignment="center"
+          snapToInterval={SIZES.width}
+          showsHorizontalScrollIndicator={false}
+          data={constants.bottom_tabs}
+          keyExtractor={(item) => `${item.id}`}
+          renderItem={({ item, index }) => {
+            return (
+              <View style={{ height: SIZES.height, width: SIZES.width }}>
+                {selectedTab == constants.screens.home && <Home />}
+                {selectedTab == constants.screens.search && <Search />}
+                {selectedTab == constants.screens.cart && <CartTab />}
+                {selectedTab == constants.screens.favourite && <Favourite />}
+                {selectedTab == constants.screens.notification && (
+                  <Notification />
+                )}
+              </View>
+            );
+          }}
+        />
       </View>
+
       <View style={{ height: 100, justifyContent: "flex-end" }}>
         <LG
           start={{ x: 0, y: 0 }}
@@ -141,7 +183,6 @@ const MainLayout = ({ drawerAnimatedStyle, navigation }) => {
             icon={icons.cart}
             isFocused={selectedTab === constants.screens.cart}
             onPress={() => dispatch(setSelectedTab(constants.screens.cart))}
-            // onPress={() => setSelectedTab(constants.screens.cart)}
           />
           <BottomTab
             label={constants.screens.favourite}
@@ -150,12 +191,12 @@ const MainLayout = ({ drawerAnimatedStyle, navigation }) => {
             onPress={() =>
               dispatch(setSelectedTab(constants.screens.favourite))
             }
-            // onPress={() => setSelectedTab(constants.screens.favourite)}
           />
+
           <BottomTab
             label={constants.screens.notification}
             icon={icons.notification}
-            isFocused={setSelectedTab === constants.screens.notification}
+            isFocused={selectedTab === constants.screens.notification}
             onPress={() =>
               dispatch(setSelectedTab(constants.screens.notification))
             }
