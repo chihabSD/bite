@@ -225,7 +225,28 @@ const FilterModal = ({ filterModal, toggleFilterModal }) => {
             {renderRatings()}
             {renderTags()}
           </ScrollView>
-          <View></View>
+          <View
+            style={{
+              position: "absolute",
+              bottom: 150,
+              left: 0,
+              right: 0,
+              paddingVertical: SIZES.radius,
+              paddingHorizontal: SIZES.padding,
+              backgroundColor: "white",
+              height: 1,
+            }}
+          >
+            <TextButton
+              label="Apply filters"
+              buttonContainerStyle={{
+                height: 50,
+                borderRadius: SIZES.base,
+                backgroundColor: COLORS.red,
+              }}
+              onPress={() => console.warn("apply filters")}
+            />
+          </View>
         </View>
       </View>
     </Modal>
