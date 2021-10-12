@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const tabSlice = createSlice({
   name: "auth",
   initialState: {
-    selectedTab: "",
+    selectedTab: "Home",
   },
   reducers: {
     setSelectedTab: (state, action) => {

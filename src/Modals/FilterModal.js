@@ -1,9 +1,36 @@
 import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  ScrollView,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { COLORS, FONTS } from "../../constants";
+import { COLORS, FONTS, icons } from "../../constants";
+import FilterModalSections from "../components/FilterModalSections";
+import IconButton from "../components/IconButton";
+import TwoPointSlider from "../components/TwoPointSlider";
 import { useModals } from "../hooks/useModal";
 
+const renderDistance = () => {
+  return (
+    <FilterModalSections title="Distance">
+      <View style={{ alignItems: "center", marginTop: 10 }}>
+        <TwoPointSlider
+          values={[3, 10]}
+          min={1}
+          max={20}
+          postFix="km"
+          onValuesChange={(values) => console.warn(values)}
+          prefix={0}
+        />
+      </View>
+    </FilterModalSections>
+  );
+};
 const FilterModal = ({ filterModal, toggleFilterModal }) => {
   //   const { toggleFilterModal } = useModals();
   return (
@@ -12,14 +39,29 @@ const FilterModal = ({ filterModal, toggleFilterModal }) => {
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={{ flex: 1, ...FONTS.h3 }}>Filter your search</Text>
+            <Text style={{ flex: 1, ...FONTS.h3, fontSize: 18 }}>
+              Filter your search
+            </Text>
+            <IconButton
+              containerStyle={{
+                borderWidth: 2,
+                borderRadius: 10,
+
+                borderColor: COLORS.gray2,
+              }}
+              icon={icons.cross}
+              iconStyle={{
+                tintColor: COLORS.gray2,
+              }}
+              onPress={toggleFilterModal}
+            />
           </View>
-          <TouchableOpacity
-            style={[styles.button, styles.buttonClose]}
-            onPress={toggleFilterModal}
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 250 }}
           >
-            <Text style={styles.textStyle}>Hide Modal</Text>
-          </TouchableOpacity>
+            {renderDistance()}
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -38,10 +80,9 @@ const styles = StyleSheet.create({
     // margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 20,
     marginTop: 100,
     height: "70%",
-    alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
