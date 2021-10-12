@@ -14,6 +14,7 @@ import { SIZES } from "../../srca/constants/theme";
 import FilterModalSections from "../components/FilterModalSections";
 import IconButton from "../components/IconButton";
 import TextButton from "../components/TextButton";
+import TextIconButton from "../components/TextIconButton";
 import TwoPointSlider from "../components/TwoPointSlider";
 import { useModals } from "../hooks/useModal";
 
@@ -115,6 +116,51 @@ const FilterModal = ({ filterModal, toggleFilterModal }) => {
       </FilterModalSections>
     );
   };
+
+  const renderRatings = () => {
+    return (
+      <FilterModalSections title="Ratings" containerStyle={{ marginTop: 40 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 20,
+          }}
+        >
+          {constants.ratings.map((item, index) => {
+            return (
+              <TextIconButton
+                key={`Ratings-${index}`}
+                label={item.label}
+                icon={icons.star}
+                iconStyle={{
+                  tintColor: item.id == ratings ? COLORS.white : COLORS.gray,
+                }}
+                labelStyle={{
+                  color: item.id == ratings ? COLORS.white : COLORS.gray,
+                  ...FONTS.body3,
+                }}
+                // labelStyle={{
+                //   color: item.id == deliveryTime ? COLORS.white : COLORS.gray,
+                //   ...FONTS.body3,
+                // }}
+                containerStyle={{
+                  flex: 1,
+                  height: 50,
+                  margin: 5,
+                  alignItems: "center",
+                  borderRadius: SIZES.base,
+                  backgroundColor:
+                    item.id == ratings ? COLORS.primary : COLORS.lightGray2,
+                }}
+                onPress={() => setRatings(item.id)}
+              />
+            );
+          })}
+        </View>
+      </FilterModalSections>
+    );
+  };
   return (
     // <View style={styles.centeredView}>
     <Modal animationType="falde" transparent={true} visible={true}>
@@ -145,6 +191,7 @@ const FilterModal = ({ filterModal, toggleFilterModal }) => {
             {renderDistance()}
             {renderDeliveryTime()}
             {renderPriceRange()}
+            {renderRatings()}
           </ScrollView>
         </View>
       </View>
@@ -166,7 +213,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     marginTop: 100,
-    height: "70%",
+    height: "80%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
