@@ -161,6 +161,37 @@ const FilterModal = ({ filterModal, toggleFilterModal }) => {
       </FilterModalSections>
     );
   };
+
+  const renderTags = () => {
+    return (
+      <FilterModalSections title="Tags">
+        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+          {constants.tags.map((item, index) => {
+            return (
+              <TextButton
+                key={`Tags-${index}`}
+                label={item.label}
+                labelStyle={{
+                  color: item.id == tags ? COLORS.white : COLORS.gray,
+                  ...FONTS.body3,
+                }}
+                buttonContainerStyle={{
+                  height: 50,
+                  margin: 5,
+                  paddingHorizontal: SIZES.padding,
+                  alignItems: "center",
+                  borderRadius: SIZES.base,
+                  backgroundColor:
+                    item.id == tags ? COLORS.primary : COLORS.lightGray2,
+                }}
+                onPress={() => setTags(item.id)}
+              />
+            );
+          })}
+        </View>
+      </FilterModalSections>
+    );
+  };
   return (
     // <View style={styles.centeredView}>
     <Modal animationType="falde" transparent={true} visible={true}>
@@ -192,7 +223,9 @@ const FilterModal = ({ filterModal, toggleFilterModal }) => {
             {renderDeliveryTime()}
             {renderPriceRange()}
             {renderRatings()}
+            {renderTags()}
           </ScrollView>
+          <View></View>
         </View>
       </View>
     </Modal>
