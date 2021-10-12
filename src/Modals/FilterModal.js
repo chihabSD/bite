@@ -25,10 +25,20 @@ const renderDistance = () => {
           values={[3, 10]}
           min={1}
           max={20}
-          postFix="km"
+          prefix="km "
+          // postFix="km"
           onValuesChange={(values) => console.warn(values)}
-          prefix={0}
+          // prefix={0}
         />
+
+        {/* <TwoPointSlider
+          values={[3, 10]}
+          min={1}
+          max={20}
+          postFix="km"
+          prefix="km"
+          onValuesChange={(values) => console.warn(values)}
+        /> */}
       </View>
     </FilterModalSections>
   );
@@ -45,7 +55,13 @@ const FilterModal = ({ filterModal, toggleFilterModal }) => {
         title="Delivery time"
         containerStyle={{ marginTop: 50 }}
       >
-        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            marginTop: SIZES.radius,
+          }}
+        >
           {constants.delivery_time.map((item, index) => {
             return (
               <TextButton
@@ -81,6 +97,24 @@ const FilterModal = ({ filterModal, toggleFilterModal }) => {
       </FilterModalSections>
     );
   };
+
+  const renderPriceRange = () => {
+    return (
+      <FilterModalSections title="Price">
+        <View style={{ alignItems: "center", marginTop: 10 }}>
+          <TwoPointSlider
+            values={[10, 50]}
+            min={1}
+            max={100}
+            prefix="$"
+            postFix=""
+            onValuesChange={(values) => console.warn(values)}
+            // prefix={0}
+          />
+        </View>
+      </FilterModalSections>
+    );
+  };
   return (
     // <View style={styles.centeredView}>
     <Modal animationType="falde" transparent={true} visible={true}>
@@ -110,6 +144,7 @@ const FilterModal = ({ filterModal, toggleFilterModal }) => {
           >
             {renderDistance()}
             {renderDeliveryTime()}
+            {renderPriceRange()}
           </ScrollView>
         </View>
       </View>
